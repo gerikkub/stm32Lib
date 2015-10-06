@@ -1,5 +1,7 @@
 #include "main.h"
 
+#include "gpio.h"
+
 static uint16_t __timer = 0;
 
 void Delay(uint16_t n)
@@ -10,14 +12,9 @@ void Delay(uint16_t n)
 
 int main()
 {
-    STM_EVAL_LEDInit(LED3);
-    STM_EVAL_LEDInit(LED4);
-    STM_EVAL_LEDInit(LED5);
-    STM_EVAL_LEDInit(LED6);
-    STM_EVAL_LEDInit(LED7);
-    STM_EVAL_LEDInit(LED8);
-    STM_EVAL_LEDInit(LED9);
-    STM_EVAL_LEDInit(LED10);
+
+    GPIOInitPin(GPIOE, 15, GPIO_DIR_OUTPUT | GPIO_OUTPUT_PP | GPIO_SPEED_HIGH);
+    GPIOInitPin(GPIOE, 14, GPIO_DIR_INPUT | GPIO_PULL_UP);
 
     if (SysTick_Config(SystemCoreClock / 1000))
     { 
@@ -25,14 +22,10 @@ int main()
     }
 
     while (1) {
-        STM_EVAL_LEDToggle(LED3);
-        STM_EVAL_LEDToggle(LED4);
-        STM_EVAL_LEDToggle(LED5);
-        STM_EVAL_LEDToggle(LED6);
-        STM_EVAL_LEDToggle(LED7);
-        STM_EVAL_LEDToggle(LED8);
-        STM_EVAL_LEDToggle(LED9);
-        STM_EVAL_LEDToggle(LED10);
+        if (GPIOReadPin(GPIOE, 14))
+        {
+            GPIOTogglePin(GPIOE, 15);
+        }
         Delay(100);
     }
 }

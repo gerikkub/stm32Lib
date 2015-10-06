@@ -20,7 +20,10 @@ SOURCES += startup_stm32f30x.s
 SOURCES += stm32f30x_it.c
 SOURCES += system_stm32f30x.c
 
+SOURCES += simpleLib/gpio.c
+
 SOURCES += main.c
+
 
 OBJECTS = $(addprefix $(BUILDDIR)/, $(addsuffix .o, $(basename $(SOURCES))))
 
@@ -29,6 +32,7 @@ INCLUDES += -I$(DEVICE)/include \
 			-I$(PERIPH)/include \
 			-I$(DISCOVERY)/include \
 			-I$(USB)/include \
+			-IsimpleLib \
 			-I\
 
 ELF = $(BUILDDIR)/program.elf
